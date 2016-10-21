@@ -1,0 +1,156 @@
+nav{
+
+	box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);		
+}
+
+.profile{
+	margin-top: 15px;
+	padding-top: 10px;
+	font-family: calibri;
+	box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);
+	
+}
+
+.textHolder {
+	font-size: 18px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.circle{
+	border-radius: 20%;
+}
+
+.photoHolder {
+ 	display: block;
+ 	margin:auto;
+ }
+
+
+.bold {
+	font-weight: bolder;
+}
+
+.outer {
+	padding: 10px;
+	padding-right:25px;
+	margin-top : 40px;
+}
+
+.content {
+	padding:10px;
+	margin-top: 7px;
+	margin-left: 35px;
+	margin-right: 35px;
+}
+
+.repeat {
+	padding: 10px;
+	margin-bottom: 10px;
+	font-family: openSans;
+	box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);
+}
+
+.repeat .row {
+	padding-bottom: 10px;
+}
+
+.heading{
+	margin-left: 5px;
+	font-size: 18px;
+}
+
+.postHead {
+	font-weight: bolder;
+}
+
+.trending {
+	padding:5px;
+	margin:5px;
+}
+
+
+.timeDisplay {
+	font-size: 12px;
+	color:grey;
+}
+
+nav a {
+	cursor: pointer;
+}
+
+nav .active {
+	background: #f0f0f0;
+}
+
+@font-face {
+	font-family: openSans;
+	src:url(../fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+	font-family: calibri;
+	src:url(../fonts/Calibri.ttf);
+}
+
+.postWrite{
+	margin:5px;
+}
+
+.coloring{
+	background: #f2e8e8;
+}
+
+
+.limitHeight {
+	max-height: 100px;
+	margin: auto;
+}
+
+.limitHeight-300{
+	max-height: 300px;
+	margin: auto;	
+}
+
+.followingUser{
+	margin-bottom: 5px;
+}
+.followingUser img
+{
+	max-height: 80px;
+}
+
+.gap{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.commentContainer {
+	margin-top: 70px;
+}
+
+.likeHolder{
+	margin-bottom: 15px;
+}
+
+.center{
+	text-align: center;
+}
+
+
+.follow{
+	width: 60px;
+	margin:auto;
+	display: block;
+}
+
+.postEditor{
+	margin-top : 60px;
+}
+
+.followingUser img {
+	display: block;
+	margin:auto;
+}
+
+
