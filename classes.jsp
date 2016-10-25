@@ -1,36 +1,41 @@
 <%@page import="java.sql.*" %>
-        <%@page import="javax.sql.*" %>
+<%@page import="javax.sql.*" %>
  
 <%
-class Connection{ 
-
-
-				public  Connection(){  
-					try{  
-					Class.forName("com.mysql.jdbc.Driver");  
-					java.sql.Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/friendzone","root","");  
-	}catch(Exception e){ System.out.println(e);}
+class Connection
+{ 
+	public java.sql.Connection con;
+	
+	public Connection()
+	{  
+		try
+		{  
+			Class.forName("com.mysql.jdbc.Driver");  
+			this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/friendzone","root","");  
+		}catch(Exception e){ System.out.println(e);}
 	} 
-	} 
- class Users extends Connection{
-
-
-	public Users()
-	{
-	}
+}; 
+ 
+class Users extends Connection{
 	
 	public boolean isLogin(String userName, String password)
 	{
 		Connection conn = new Connection();
 		String sql = "SELECT * FROM users WHERE userName = '"+userName+"' AND password = '"+password+"'";
-		Statement st=conn.createStatement();
+		Statement st;
 		ResultSet result;
-		result=st.executeQuery(sql);
-		if (result.next() == false)
-			return false;
-		else
-			return true;
+		try
+		{
+			st = conn.con.createStatement();
+			result=st.executeQuery(sql);
+			if (result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e){ System.out.println(e);}
+		return false;
 	}
+
 
 }
 // 	public function isSignup($firstName, $lastName,$userName,$password)
