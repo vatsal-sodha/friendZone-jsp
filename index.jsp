@@ -100,9 +100,9 @@ session_start();
 	</div>
 	</div>
 </div>
- <%@page import="java.sql.*" %>
-        <%@page import="javax.sql.*" %>
-        <%@page import="Users.*" %>
+<%@page import="java.sql.*" %>
+<%@page import="javax.sql.*" %>
+<%@page import="Users" %>
 
 <%
 
@@ -113,7 +113,8 @@ session_start();
 
 		out.println(userName);
 		Users user = new Users();
-		boolean isLogin = user.isLogin(userName,password);
+		boolean isLogin;
+		isLogin =  user.isLogin(userName,password);
 		if(isLogin == true)
 		 	{
 		 	String redirectURL = "http://localhost:8080/friendzone/home/index.php";
