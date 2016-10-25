@@ -50,9 +50,9 @@ session_start();
 	</div>
 	<div class="modal-body">
 		<form action="" method="POST" role="form">
-			<input type="text" name="userName" class="form-control" required="required" placeholder="User Name">
-			<input type="password" name="password" class="form-control" required="required" placeholder="Password">
-			<button type="submit" class="btn btn-primary" name="login">Submit</button>
+			<input type="text" name="userName1" class="form-control" required="required" placeholder="User Name">
+			<input type="password" name="password1" class="form-control" required="required" placeholder="Password">
+			<button type="submit" class="btn btn-primary" value="login" name="login">Submit</button>
 		</form>
 	</div>
 	</div>
@@ -92,7 +92,7 @@ session_start();
 	</div>
 	<div class="row">
 		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-			<button type="submit" class="btn btn-primary" id="btn" name="signup">Sign Up</button>
+			<button type="submit" value="signup" class="btn btn-primary" id="btn" name="signup">Sign Up</button>
 		</div>
 	</div>
 	</form>
@@ -100,45 +100,31 @@ session_start();
 	</div>
 	</div>
 </div>
-<% 
-		Class.forName("com.mysql.jdbc.Driver");  
-					java.sql.Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/friendzone","root","");
+ <%@page import="java.sql.*" %>
+        <%@page import="javax.sql.*" %>
+        <%@page import="Users.*" %>
+
+<%
+
+		String isit=request.getParameter("login");
+		if(isit !=null && isit.equals("login")){
+		String userName=request.getParameter("userName1");
+		String password=request.getParameter("password1");
+
+		out.println(userName);
+		Users user = new Users();
+		boolean isLogin = user.isLogin(userName,password);
+		if(isLogin == true)
+		 	{
+		 	String redirectURL = "http://localhost:8080/friendzone/home/index.php";
+        	response.sendRedirect(redirectURL);
+		 	}
+		else
+		{
+		out.println("<script type='text/javascript'>alert('Wrong Credentials');window.location.href = 'index.php';</script>");
+		}
+	}
+
 %>
 </body>
 </html>
-<?php
-// $user = new Users($conn);
-// if(isset($_POST['signup']) && $_POST['signup'] == "ready")
-// {
-// $userName=$_POST["userName"];
-// $firstName=$_POST["firstName"];
-// $lastName=$_POST["lastName"];
-// $password=$_POST["password"];
-// $isSignup = $user->isSignup($firstName,$lastName,$userName,$password);
-// if($isSignup === true)
-// {
-// 	echo "<script type='text/javascript'>alert('Successfully Signed Up');window.location.href = 'index.php';</script>";
-// }
-// elseif ($isSignup == "Username already exists") {
-// 	echo "<script type='text/javascript'>alert('Username already exists');window.location.href = 'index.php';</script>";	
-// }
-// else{
-// 		echo "<script type='text/javascript'>alert('Something went wrong');window.location.href = 'index.php';</script>";
-// }
-// }
-// if(isset($_POST['login']))
-// {
-// 	$userName=$_POST["userName"];
-// 	$password=$_POST["password"];
-// 	$isLogin = $user->isLogin($userName,$password);
-// 	if($isLogin === true)
-// 	{
-// 		$_SESSION['userName'] = $userName;
-// 		header('location:/friendzone/home/index.php');
-// 	}
-// 	else
-// 	{
-// 		echo "<script type='text/javascript'>alert('Wrong user Credentials');window.location.href = 'index.php';</script>";
-// 	}
-// }
-?>
