@@ -67,7 +67,7 @@ class Users extends Connection{
 		}
 		catch(Exception e){ System.out.println(e); return -5;}
 	}
-}
+
 
 // 	public function getProfileByUserName($userName)
 // 	{
@@ -158,28 +158,40 @@ class Users extends Connection{
 // 	}
 
 	
-// 	public function isLiked($userId, $postId)
-// 	{
-// 		$sql = "SELECT * FROM likes WHERE postId = '$postId' AND userId = '$userId'";
-// 		$result = $this->conn->query($sql);
+	public boolean isLiked(int userId, int postId)
+	{
+		Connection conn = new Connection();
+		String sql = "SELECT * FROM likes WHERE postId = "+postId+" AND userId = "+userId;
+		Statement st;
+		ResultSet result;
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeQuery(sql);
+			if(result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) { System.out.println(e);}
 
-// 		if($result->num_rows == 0)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	}
 
-// 	public function addComment($postId, $userId, $description)
-// 	{
-		
-// 		$sql = "INSERT INTO comments(postId, userId, description) VALUES('$postId', '$userId', '$description')";
-// 		$result = $this->conn->query($sql);
+	public boolean addComment(int postId, int userId, String description)
+	{
+		Connection conn = new Connection();
+		String sql = "INSERT INTO comments(postId, userId, description) VALUES("+postId+", "+userId+", '"+description+"')";
+		Statement st;
+		ResultSet result;
+		try{
+			st= conn.con.createdStatement();
+			result = st.executeQuery(sql);
+			if (result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) {System.out.println(e);}
 
-// 		if (!$result)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	}
 
 // 	public function getNoOfLikes($postId)
 // 	{
@@ -447,43 +459,61 @@ class Users extends Connection{
 // 		}
 // 	}
 
-// 	public function follow($user1, $user2)
-// 	{
-// 		$isFollowing = $this->isFollowing($user1, $user2);
 
-// 		if(!$isFollowing)
-// 		{
-// 			$sql = "INSERT INTO follows VALUES ('$user1', '$user2')";
-// 			$result = $this->conn->query($sql);
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
-// 		else
-// 		{
-// 			$sql = "DELETE FROM follows WHERE user1 = '$user1' AND user2 = '$user2'";
-// 			$result = $this->conn->query($sql);
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
+	public boolean follow(int user1, int user2)
+	{
+		boolean isFollowing = this.isFollowing(user1, user2);
+
+		if(isFollowing == false)
+		{
+			Connection conn = new Connection();
+			String sql = "INSERT INTO follows VALUES ("+user1+", "+user2+")";
+			Statement st;
+			int result;
+			try
+			{
+				st = conn.con.createStatement();
+				result = st.executeUpdate(sql);
+				if(result < 0 )
+					return false;
+				else
+					return true;
+			}catch(Exception e) {System.out.println(e);}
+		}
+		else
+		{
+			Connection conn = new Connection();
+			String sql = "DELETE FROM follows WHERE user1 = "+user1+" AND user2 = "+user2;
+			Statement st;
+			int result;
+			try{
+				st = conn.con.createStatement();
+				result = st.executeUpdate(sql);
+				if(result < 0)
+					return false;
+				else
+					return true;
+			}catch(Exception e){System.out.println(e);}
+		}
+ 	}
 
 
-// 	}
+	public boolean isFollowing(int user1, int user2)
+	{
+		Connection conn = new Connection();
+		String sql = "SELECT * FROM follows WHERE user1 = "+user1+" AND user2 = "+user2;
+		Statement st;
+		ResultSet result;
+		try{
+			st= conn.con.createdStatement();
+			result = st.executeQuery(sql);
+			if (result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) {System.out.println(e);}
 
-
-// 	public function isFollowing($user1, $user2)
-// 	{
-// 		$sql = "SELECT * FROM follows WHERE user1 = '$user1' AND user2 = '$user2'";
-// 		$result = $this->conn->query($sql);
-
-// 		if($result->num_rows == 0)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	}
 // 	public function getPostsForProfile($userName)
 // 	{
 // 		$sql = "SELECT userId from users WHERE userName = '$userName'";
@@ -568,7 +598,7 @@ class Users extends Connection{
 
 
 	
-	
+}	
  %>
 
 
