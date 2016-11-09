@@ -176,17 +176,22 @@ class Users extends Connection{
 
 	}
 
-// 	public function addComment($postId, $userId, $description)
-// 	{
-		
-// 		$sql = "INSERT INTO comments(postId, userId, description) VALUES('$postId', '$userId', '$description')";
-// 		$result = $this->conn->query($sql);
+	public boolean addComment(int postId, int userId, String description)
+	{
+		Connection conn = new Connection();
+		String sql = "INSERT INTO comments(postId, userId, description) VALUES("+postId+", "+userId+", '"+description+"')";
+		Statement st;
+		ResultSet result;
+		try{
+			st= conn.con.createdStatement();
+			result = st.executeQuery(sql);
+			if (result.next() == false)
+				return false;
+			else
+				return true;
+		}
 
-// 		if (!$result)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	}
 
 // 	public function getNoOfLikes($postId)
 // 	{
