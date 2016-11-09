@@ -61,7 +61,7 @@
 		<h3> <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Join Us! </h3>
 	</div>
 	<div class="modal-body">
-		<form action="" method="POST" >
+		<form action="" method="POST" onsubmit="return checkPassword();">
 	<div class="row">
 		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			<input type="text" name="firstName" class="form-control" required="required" placeholder="First Name">
