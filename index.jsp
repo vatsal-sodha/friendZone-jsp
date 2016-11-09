@@ -138,6 +138,10 @@
 		{
 		out.println("<script type='text/javascript'>alert('Sorry');window.location.href = 'index.jsp';</script>");
 		}
+		else if(isSignup == -3)
+		{
+		out.println("<script type='text/javascript'>alert('Username Already exists');window.location.href = 'index.jsp';</script>");
+		}
 	}
 
 %>
