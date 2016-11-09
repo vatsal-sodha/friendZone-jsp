@@ -110,6 +110,7 @@
 		isLogin =  user.isLogin(userName,password);
 		if(isLogin == true)
 		 	{
+		 	session.setAttribute("userName",userName);
 		 	String redirectURL = "http://localhost:8080/friendzone/home/index.php";
         	response.sendRedirect(redirectURL);
 		 	}
@@ -131,7 +132,7 @@
 		System.out.println("fuck");
 		if(isSignup > 0 )
 		 	{
-		 	String redirectURL = "http://localhost:8080/friendzone/home/index.php";
+		 	String redirectURL = "http://localhost:8080/friendZone/home/index.php";
         	response.sendRedirect(redirectURL);
 		 	}
 		else if(isSignup == -1)
