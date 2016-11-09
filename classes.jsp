@@ -67,7 +67,7 @@ class Users extends Connection{
 		}
 		catch(Exception e){ System.out.println(e); return -5;}
 	}
-}
+
 
 // 	public function getProfileByUserName($userName)
 // 	{
@@ -158,16 +158,23 @@ class Users extends Connection{
 // 	}
 
 	
-// 	public function isLiked($userId, $postId)
-// 	{
-// 		$sql = "SELECT * FROM likes WHERE postId = '$postId' AND userId = '$userId'";
-// 		$result = $this->conn->query($sql);
+	public boolean isLiked(int userId, int postId)
+	{
+		Connection conn = new Connection();
+		String sql = "SELECT * FROM likes WHERE postId = "+postId+" AND userId = "+userId;
+		Statement st;
+		ResultSet result;
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeQuery(sql);
+			if(result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) { System.out.println(e);}
 
-// 		if($result->num_rows == 0)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	}
 
 // 	public function addComment($postId, $userId, $description)
 // 	{
@@ -568,7 +575,7 @@ class Users extends Connection{
 
 
 	
-	
+}	
  %>
 
 
