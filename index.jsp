@@ -61,7 +61,7 @@
 		<h3> <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Join Us! </h3>
 	</div>
 	<div class="modal-body">
-		<form action="" method="POST" onsubmit="return checkPassword();">
+		<form action="" method="POST" >
 	<div class="row">
 		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			<input type="text" name="firstName" class="form-control" required="required" placeholder="First Name">
@@ -87,7 +87,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-			<button type="submit" value="signup" class="btn btn-primary" id="btn" name="signup">Sign Up</button>
+			<button type="submit" value="signup" class="btn btn-primary" id="" name="signup">Sign Up</button>
 		</div>
 	</div>
 	</form>
@@ -118,24 +118,25 @@
 		out.println("<script type='text/javascript'>alert('Wrong Credentials');window.location.href = 'index.jsp';</script>");
 		}
 	}
-	String isit=request.getParameter("signup");
-		if(isit !=null && isit.equals("signup")){
+	String isit2=request.getParameter("signup");
+		if(isit2 !=null && isit2.equals("signup")){
 		String userName=request.getParameter("userName");
 		String password=request.getParameter("password");
 		String firstName=request.getParameter("firstName");
-
+		String lastName=request.getParameter("lastName");
 
 		Users user = new Users();
-		boolean isSignup;
+		int isSignup;
 		isSignup =  user.isSignup(firstName,lastName,userName,password);
-		if(isSignup == true)
+		System.out.println("fuck");
+		if(isSignup > 0 )
 		 	{
 		 	String redirectURL = "http://localhost:8080/friendzone/home/index.php";
         	response.sendRedirect(redirectURL);
 		 	}
-		else
+		else if(isSignup == -1)
 		{
-		out.println("<script type='text/javascript'>alert('Wrong Credentials');window.location.href = 'index.jsp';</script>");
+		out.println("<script type='text/javascript'>alert('Sorry');window.location.href = 'index.jsp';</script>");
 		}
 	}
 

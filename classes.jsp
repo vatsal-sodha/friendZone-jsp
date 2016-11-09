@@ -37,33 +37,36 @@ class Users extends Connection{
 	}
 
 
-}
-	public boolean isSignup(String firstName, String lastName, String userName, String password)
+	public int isSignup(String firstName, String lastName, String userName, String password)
 	{
 		Connection conn = new Connection();
-		String query2 = "SELECT userName from users where userName = '"+userName+"'";
+		String query2 = "SELECT * FROM users WHERE userName = '"+userName+"'";
 		Statement st;
-		ResultSet result2;
+		ResultSet result2; int result3;
 		try{
 			st = conn.con.createStatement();
 			result2 = st.executeQuery(query2);
-		if(result.next() == false)
+			}
+		catch(Exception e){ System.out.println(e); return -1;}
+
+		try{
+		if(result2.next() == false)
 		{
 			String query1 = "INSERT INTO users(firstName,lastName,userName,password) Values('"+firstName+"','"+lastName+"','"+userName+"','"+password+"')";
 			Statement s;
 			try{
 				s = conn.con.createStatement();
-				s.executeQuery(query1);
-				return true;
-			}catch(Exception e) { System.out.println(e); return false;}
+				result3=s.executeUpdate(query1);
+				return result3;
+			}catch(Exception e) { System.out.println(e); return -2;}
 			
 		}
 		else{
-			return false;
+			return -3;
 		}
 		}
-		catch(Exception e){ System.out.println(e);}
-	return false;	
+		catch(Exception e){ System.out.println(e); return -5;}
+	}
 }
 
 // 	public function getProfileByUserName($userName)
