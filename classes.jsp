@@ -189,7 +189,7 @@ class Users extends Connection{
 				return false;
 			else
 				return true;
-		}
+		}catch(Exception e) {System.out.println(e);}
 
 	}
 
@@ -486,16 +486,22 @@ class Users extends Connection{
 // 	}
 
 
-// 	public function isFollowing($user1, $user2)
-// 	{
-// 		$sql = "SELECT * FROM follows WHERE user1 = '$user1' AND user2 = '$user2'";
-// 		$result = $this->conn->query($sql);
+	public boolean isFollowing(int user1, int user2)
+	{
+		Connection conn;
+		String sql = "SELECT * FROM follows WHERE user1 = "+user1+" AND user2 = "+user2;
+		Statement st;
+		ResultSet result;
+		try{
+			st= conn.con.createdStatement();
+			result = st.executeQuery(sql);
+			if (result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) {System.out.println(e);}
 
-// 		if($result->num_rows == 0)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	}
 // 	public function getPostsForProfile($userName)
 // 	{
 // 		$sql = "SELECT userId from users WHERE userName = '$userName'";
