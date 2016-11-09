@@ -105,11 +105,30 @@
 		String userName=request.getParameter("userName1");
 		String password=request.getParameter("password1");
 
-		out.println(userName);
 		Users user = new Users();
 		boolean isLogin;
 		isLogin =  user.isLogin(userName,password);
 		if(isLogin == true)
+		 	{
+		 	String redirectURL = "http://localhost:8080/friendzone/home/index.php";
+        	response.sendRedirect(redirectURL);
+		 	}
+		else
+		{
+		out.println("<script type='text/javascript'>alert('Wrong Credentials');window.location.href = 'index.jsp';</script>");
+		}
+	}
+	String isit=request.getParameter("signup");
+		if(isit !=null && isit.equals("signup")){
+		String userName=request.getParameter("userName");
+		String password=request.getParameter("password");
+		String firstName=request.getParameter("firstName");
+
+
+		Users user = new Users();
+		boolean isSignup;
+		isSignup =  user.isSignup(firstName,lastName,userName,password);
+		if(isSignup == true)
 		 	{
 		 	String redirectURL = "http://localhost:8080/friendzone/home/index.php";
         	response.sendRedirect(redirectURL);
