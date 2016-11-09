@@ -1,8 +1,3 @@
-<?php
-require_once 'config/connect.php';
-require_once 'config/classes.php';
-session_start();
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,8 +97,7 @@ session_start();
 </div>
 <%@page import="java.sql.*" %>
 <%@page import="javax.sql.*" %>
-<%@page import="Users" %>
-
+<%@ include file="classes.jsp" %>
 <%
 
 		String isit=request.getParameter("login");
@@ -122,7 +116,7 @@ session_start();
 		 	}
 		else
 		{
-		out.println("<script type='text/javascript'>alert('Wrong Credentials');window.location.href = 'index.php';</script>");
+		out.println("<script type='text/javascript'>alert('Wrong Credentials');window.location.href = 'index.jsp';</script>");
 		}
 	}
 
