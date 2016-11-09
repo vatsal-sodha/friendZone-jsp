@@ -38,30 +38,33 @@ class Users extends Connection{
 
 
 }
-// 	public function isSignup($firstName, $lastName,$userName,$password)
-// 	{
-// 		$query2 = "SELECT userName from users where userName = '$userName'";
-// 		$password = md5($password);
-// 		$result2= $this->conn->query($query2);
-// 		if($result2->num_rows === 0)
-// 		{
-// 			$query1 = "INSERT INTO users(firstName,lastName,userName,password) Values('$firstName','$lastName','$userName','$password')";
-// 			if($this->conn->query($query1))
-// 		{
-// 			return true;
-// 		}
-// 			else
-// 		{
-// 			return "Soory something went wrong";
-// 		}
-
-// 		}
-// 		else{
-// 			return "Username already exists";
-// 		}
-		
-
-// 	}
+	public boolean isSignup(String firstName, String lastName, String userName, String password)
+	{
+		Connection conn = new Connection();
+		String query2 = "SELECT userName from users where userName = '"+userName+"'";
+		Statement st;
+		ResultSet result2;
+		try{
+			st = conn.con.createStatement();
+			result2 = st.executeQuery(query2);
+		if(result.next() == false)
+		{
+			String query1 = "INSERT INTO users(firstName,lastName,userName,password) Values('"+firstName+"','"+lastName+"','"+userName+"','"+password+"')";
+			Statement s;
+			try{
+				s = conn.con.createStatement();
+				s.executeQuery(query1);
+				return true;
+			}catch(Exception e) { System.out.println(e); return false;}
+			
+		}
+		else{
+			return false;
+		}
+		}
+		catch(Exception e){ System.out.println(e);}
+	return false;	
+}
 
 // 	public function getProfileByUserName($userName)
 // 	{
