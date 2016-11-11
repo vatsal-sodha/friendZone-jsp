@@ -91,16 +91,16 @@ class Users extends Connection{
 
 // 	}
 
-// 	public function editPost($image, $description, $postId)
-// 	{
-// 		$sql = "UPDATE post SET description = '$description', img = '$image' WHERE postId = '$postId'";
-// 		$result = $this->conn->query($sql);
+	// public boolean editPost(String image, String description, int postId)
+	// {
+	// 	String sql = "UPDATE post SET description = '"+description+"', img = '$image' WHERE postId = '$postId'";
+	// 	$result = $this->conn->query($sql);
 
-// 		if(!$result)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	// 	if(!$result)
+	// 		return false;
+	// 	else
+	// 		return true;
+	// }
 
 // 	public function addPost($image, $description, $userName)
 // 	{
@@ -172,7 +172,8 @@ class Users extends Connection{
 				return false;
 			else
 				return true;
-		}catch(Exception e) { System.out.println(e);}
+		}catch(Exception e) { System.out.println(e); return false; }
+
 
 	}
 
@@ -183,13 +184,13 @@ class Users extends Connection{
 		Statement st;
 		ResultSet result;
 		try{
-			st= conn.con.createdStatement();
+			st= conn.con.createStatement();
 			result = st.executeQuery(sql);
 			if (result.next() == false)
 				return false;
 			else
 				return true;
-		}catch(Exception e) {System.out.println(e);}
+		}catch(Exception e) {System.out.println(e); return false;}
 
 	}
 
@@ -478,7 +479,7 @@ class Users extends Connection{
 					return false;
 				else
 					return true;
-			}catch(Exception e) {System.out.println(e);}
+			}catch(Exception e) {System.out.println(e); return false;}
 		}
 		else
 		{
@@ -493,7 +494,7 @@ class Users extends Connection{
 					return false;
 				else
 					return true;
-			}catch(Exception e){System.out.println(e);}
+			}catch(Exception e){System.out.println(e); return false;}
 		}
  	}
 
@@ -505,13 +506,13 @@ class Users extends Connection{
 		Statement st;
 		ResultSet result;
 		try{
-			st= conn.con.createdStatement();
+			st= conn.con.createStatement();
 			result = st.executeQuery(sql);
 			if (result.next() == false)
 				return false;
 			else
 				return true;
-		}catch(Exception e) {System.out.println(e);}
+		}catch(Exception e) {System.out.println(e); return false;}
 
 	}
 // 	public function getPostsForProfile($userName)
