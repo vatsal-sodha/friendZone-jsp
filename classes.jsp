@@ -79,28 +79,39 @@ class Users extends Connection{
 // 		return $row;
 // 	}
 
-// 	public function editProfile($firstName, $lastName, $userName, $password, $image)
-// 	{
-// 		$sql = "UPDATE users SET firstName = '$firstName', lastName = '$lastName', password = '$password', profilePhoto = '$image' WHERE userName = '$userName'";
-// 		$result = $this->conn->query($sql);
-		
-// 		if(!$result)
-// 			return false;
-// 		else
-// 			return true;
+	public boolean editProfile(String firstName, String lastName, String userName, String password, String image)
+	{
+		Connection conn = new Connection();
+		String sql = "UPDATE users SET firstName = '"+firstName+"', lastName = '"+lastName+"', password = '"+password+"', profilePhoto = '"+image+"' WHERE userName = '"+userName+"'";
+		Statement st;
+		int result;
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeUpdate(sql);
+			if(result < 0)
+				return false;
+			else 
+				return true;
+		}catch(Exception e){ System.out.println(e); return false;}
+	}
 
-// 	}
-
-	// public boolean editPost(String image, String description, int postId)
-	// {
-	// 	String sql = "UPDATE post SET description = '"+description+"', img = '$image' WHERE postId = '$postId'";
-	// 	$result = $this->conn->query($sql);
-
-	// 	if(!$result)
-	// 		return false;
-	// 	else
-	// 		return true;
-	// }
+	public boolean editPost(String image, String description, int postId)
+	{
+		Connection conn = new Connection();
+		String sql = "UPDATE post SET description = '"+description+"', img = '"+image+"' WHERE postId = "+postId;
+		Statement st;
+		int result;
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeUpdate(sql);
+			if(result < 0)
+				return false;
+			else
+				return true;
+		}catch(Exception e){ System.out.println(e); return false;}
+	}
 
 // 	public function addPost($image, $description, $userName)
 // 	{
@@ -127,35 +138,44 @@ class Users extends Connection{
 // 			return true;
 // 	}
 
-// 	public function likes($userId, $postId)
-// 	{
+	public boolean likes(int userId, int postId)
+	{
 
+		Connection conn = new Connection();
+		Statement st;
+		int results;
+		boolean result = this.isLiked(userId, postId);
 
-// 		$result = $this->isLiked($userId, $postId);
+		if(result == false)
+		{
+			try{
+			st = conn.con.createStatement();
+			String sql = "INSERT INTO likes VALUES ('"+postId+"', '"+userId+"')";
+			results = st.executeUpdate(sql);
 
-// 		if(!$result)
-// 		{
-// 			$sql = "INSERT INTO likes VALUES ('$postId', '$userId')";
-// 			$result = $this->conn->query($sql);
+			if(results < 0 )
+				return false;
+			else
+				return true;
+			}catch (Exception e) {System.out.println(e); return false;}
+		}
+		else
+		{
+			try
+			{
+			st = conn.con.createStatement();
+			String sql = "DELETE FROM likes WHERE postId = '"+postId+"' AND userId = "+userId;
 
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
-// 		else
-// 		{
-// 			$sql = "DELETE FROM likes WHERE postId = '$postId' AND userId = '$userId'";
-// 			$result = $this->conn->query($sql);
-
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
+			results = st.executeUpdate(sql);
+			if(results < 0)
+				return false;
+			else
+				return true;
+			}catch (Exception e) {System.out.println(e); return false;	}
+		}
 		
 
-// 	}
+	}
 
 	
 	public boolean isLiked(int userId, int postId)
@@ -212,11 +232,10 @@ class Users extends Connection{
 // 		return $result;
 // 	}
 
-// 	public function logout()
+// public void logout()
 // 	{
-// 		unset($_SESSION["userName"]);
-// 		session_destroy();
-// 		echo "<script type='text/javascript'>alert('Succesfully Logout');window.location.href = '../index.php';</script>";
+// 		session.invalidate();
+// 		System.out.println("<script type='text/javascript'>alert('Succesfully Logout');window.location.href = '../index.php';</script>");
 // 	}
 	
 // 	public function getPosts($userName)
