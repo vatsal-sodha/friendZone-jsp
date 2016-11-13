@@ -68,7 +68,7 @@ class Users extends Connection{
 		}
 		catch(Exception e){ System.out.println(e); return -5;}
 	}
-}
+
 
 // 	public function getProfileByUserName($userName)
 // 	{
@@ -80,28 +80,39 @@ class Users extends Connection{
 // 		return $row;
 // 	}
 
-// 	public function editProfile($firstName, $lastName, $userName, $password, $image)
-// 	{
-// 		$sql = "UPDATE users SET firstName = '$firstName', lastName = '$lastName', password = '$password', profilePhoto = '$image' WHERE userName = '$userName'";
-// 		$result = $this->conn->query($sql);
-		
-// 		if(!$result)
-// 			return false;
-// 		else
-// 			return true;
+	public boolean editProfile(String firstName, String lastName, String userName, String password, String image)
+	{
+		Connection conn = new Connection();
+		String sql = "UPDATE users SET firstName = '"+firstName+"', lastName = '"+lastName+"', password = '"+password+"', profilePhoto = '"+image+"' WHERE userName = '"+userName+"'";
+		Statement st;
+		int result;
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeUpdate(sql);
+			if(result < 0)
+				return false;
+			else 
+				return true;
+		}catch(Exception e){ System.out.println(e); return false;}
+	}
 
-// 	}
-
-// 	public function editPost($image, $description, $postId)
-// 	{
-// 		$sql = "UPDATE post SET description = '$description', img = '$image' WHERE postId = '$postId'";
-// 		$result = $this->conn->query($sql);
-
-// 		if(!$result)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	public boolean editPost(String image, String description, int postId)
+	{
+		Connection conn = new Connection();
+		String sql = "UPDATE post SET description = '"+description+"', img = '"+image+"' WHERE postId = "+postId;
+		Statement st;
+		int result;
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeUpdate(sql);
+			if(result < 0)
+				return false;
+			else
+				return true;
+		}catch(Exception e){ System.out.println(e); return false;}
+	}
 
 // 	public function addPost($image, $description, $userName)
 // 	{
@@ -128,59 +139,81 @@ class Users extends Connection{
 // 			return true;
 // 	}
 
-// 	public function likes($userId, $postId)
-// 	{
+	public boolean likes(int userId, int postId)
+	{
 
+		Connection conn = new Connection();
+		Statement st;
+		int results;
+		boolean result = this.isLiked(userId, postId);
 
-// 		$result = $this->isLiked($userId, $postId);
+		if(result == false)
+		{
+			try{
+			st = conn.con.createStatement();
+			String sql = "INSERT INTO likes VALUES ('"+postId+"', '"+userId+"')";
+			results = st.executeUpdate(sql);
 
-// 		if(!$result)
-// 		{
-// 			$sql = "INSERT INTO likes VALUES ('$postId', '$userId')";
-// 			$result = $this->conn->query($sql);
+			if(results < 0 )
+				return false;
+			else
+				return true;
+			}catch (Exception e) {System.out.println(e); return false;}
+		}
+		else
+		{
+			try
+			{
+			st = conn.con.createStatement();
+			String sql = "DELETE FROM likes WHERE postId = '"+postId+"' AND userId = "+userId;
 
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
-// 		else
-// 		{
-// 			$sql = "DELETE FROM likes WHERE postId = '$postId' AND userId = '$userId'";
-// 			$result = $this->conn->query($sql);
-
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
+			results = st.executeUpdate(sql);
+			if(results < 0)
+				return false;
+			else
+				return true;
+			}catch (Exception e) {System.out.println(e); return false;	}
+		}
 		
 
-// 	}
+	}
 
 	
-// 	public function isLiked($userId, $postId)
-// 	{
-// 		$sql = "SELECT * FROM likes WHERE postId = '$postId' AND userId = '$userId'";
-// 		$result = $this->conn->query($sql);
+	public boolean isLiked(int userId, int postId)
+	{
+		Connection conn = new Connection();
+		String sql = "SELECT * FROM likes WHERE postId = "+postId+" AND userId = "+userId;
+		Statement st;
+		ResultSet result;
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeQuery(sql);
+			if(result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) { System.out.println(e); return false; }
 
-// 		if($result->num_rows == 0)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
 
-// 	public function addComment($postId, $userId, $description)
-// 	{
-		
-// 		$sql = "INSERT INTO comments(postId, userId, description) VALUES('$postId', '$userId', '$description')";
-// 		$result = $this->conn->query($sql);
+	}
 
-// 		if (!$result)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	public boolean addComment(int postId, int userId, String description)
+	{
+		Connection conn = new Connection();
+		String sql = "INSERT INTO comments(postId, userId, description) VALUES("+postId+", "+userId+", '"+description+"')";
+		Statement st;
+		ResultSet result;
+		try{
+			st= conn.con.createStatement();
+			result = st.executeQuery(sql);
+			if (result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) {System.out.println(e); return false;}
+
+	}
 
 // 	public function getNoOfLikes($postId)
 // 	{
@@ -200,11 +233,10 @@ class Users extends Connection{
 // 		return $result;
 // 	}
 
-// 	public function logout()
+// public void logout()
 // 	{
-// 		unset($_SESSION["userName"]);
-// 		session_destroy();
-// 		echo "<script type='text/javascript'>alert('Succesfully Logout');window.location.href = '../index.php';</script>";
+// 		session.invalidate();
+// 		System.out.println("<script type='text/javascript'>alert('Succesfully Logout');window.location.href = '../index.php';</script>");
 // 	}
 	
 // 	public function getPosts($userName)
@@ -448,43 +480,61 @@ class Users extends Connection{
 // 		}
 // 	}
 
-// 	public function follow($user1, $user2)
-// 	{
-// 		$isFollowing = $this->isFollowing($user1, $user2);
 
-// 		if(!$isFollowing)
-// 		{
-// 			$sql = "INSERT INTO follows VALUES ('$user1', '$user2')";
-// 			$result = $this->conn->query($sql);
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
-// 		else
-// 		{
-// 			$sql = "DELETE FROM follows WHERE user1 = '$user1' AND user2 = '$user2'";
-// 			$result = $this->conn->query($sql);
-// 			if(!$result)
-// 				return false;
-// 			else
-// 				return true;
-// 		}
+	public boolean follow(int user1, int user2)
+	{
+		boolean isFollowing = this.isFollowing(user1, user2);
+
+		if(isFollowing == false)
+		{
+			Connection conn = new Connection();
+			String sql = "INSERT INTO follows VALUES ("+user1+", "+user2+")";
+			Statement st;
+			int result;
+			try
+			{
+				st = conn.con.createStatement();
+				result = st.executeUpdate(sql);
+				if(result < 0 )
+					return false;
+				else
+					return true;
+			}catch(Exception e) {System.out.println(e); return false;}
+		}
+		else
+		{
+			Connection conn = new Connection();
+			String sql = "DELETE FROM follows WHERE user1 = "+user1+" AND user2 = "+user2;
+			Statement st;
+			int result;
+			try{
+				st = conn.con.createStatement();
+				result = st.executeUpdate(sql);
+				if(result < 0)
+					return false;
+				else
+					return true;
+			}catch(Exception e){System.out.println(e); return false;}
+		}
+ 	}
 
 
-// 	}
+	public boolean isFollowing(int user1, int user2)
+	{
+		Connection conn = new Connection();
+		String sql = "SELECT * FROM follows WHERE user1 = "+user1+" AND user2 = "+user2;
+		Statement st;
+		ResultSet result;
+		try{
+			st= conn.con.createStatement();
+			result = st.executeQuery(sql);
+			if (result.next() == false)
+				return false;
+			else
+				return true;
+		}catch(Exception e) {System.out.println(e); return false;}
 
-
-// 	public function isFollowing($user1, $user2)
-// 	{
-// 		$sql = "SELECT * FROM follows WHERE user1 = '$user1' AND user2 = '$user2'";
-// 		$result = $this->conn->query($sql);
-
-// 		if($result->num_rows == 0)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	}
 // 	public function getPostsForProfile($userName)
 // 	{
 // 		$sql = "SELECT userId from users WHERE userName = '$userName'";
@@ -569,7 +619,7 @@ class Users extends Connection{
 
 
 	
-	
+}	
  %>
 
 
