@@ -68,29 +68,63 @@ class Users extends Connection{
 		}
 		catch(Exception e){ System.out.println(e); return -5;}
 	}
-}
 
-// 	public function getProfileByUserName($userName)
-// 	{
-// 		$sql = "SELECT * FROM users WHERE userName = '$userName'";
-// 		$result = $this->conn->query($sql);
 
-// 		$row = $result->fetch_assoc();
-
-// 		return $row;
-// 	}
-
-// 	public function editProfile($firstName, $lastName, $userName, $password, $image)
-// 	{
-// 		$sql = "UPDATE users SET firstName = '$firstName', lastName = '$lastName', password = '$password', profilePhoto = '$image' WHERE userName = '$userName'";
-// 		$result = $this->conn->query($sql);
+	public String getProfileByUserName(String userName)
+	{
+		Connection conn = new Connection();
+		String query = "SELECT * FROM users WHERE userName = '"+$userName+"'";
+		Statement st;
+		ResultSet result;
+		String arr[] = new String[7];
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeQuery(query);
+			while(result.next())
+			{
+				arr[0] = result.getString("userId");
+				arr[1] = result.getString("firstName");
+				arr[2] = result.getString("lastName");
+				arr[3] = result.getString("userName");
+				arr[4] = result.getString("password");
+				arr[5] = result.getString("profilePhoto");
+			}
+		}catch(Exception e) { System.out.println(e);}
 		
-// 		if(!$result)
-// 			return false;
-// 		else
-// 			return true;
 
-// 	}
+		return arr;
+	}
+
+
+	public function editProfile(String firstName, String lastName, String userName, String password, String image)
+	{
+		Connection conn = new Connection();
+		String sql = "UPDATE users SET firstName = '"+firstName+"', lastName = '"+lastName+"', password = '"+password+"', profilePhoto = '"+image+"' WHERE userName = '"+userName+"'";
+		Statement st;
+		ResultSet result;
+
+		try
+		{
+			st = conn.con.createStatement();
+			result=st.executeQuery(sql);
+			
+		}catch(Exception e){ System.out.println(e);}
+
+
+
+
+
+
+		$sql = "UPDATE users SET firstName = '$firstName', lastName = '$lastName', password = '$password', profilePhoto = '$image' WHERE userName = '$userName'";
+		$result = $this->conn->query($sql);
+		
+		if(!$result)
+			return false;
+		else
+			return true;
+
+	}
 
 // 	public function editPost($image, $description, $postId)
 // 	{
@@ -567,7 +601,7 @@ class Users extends Connection{
 // 		return $directory.$fileName;
 // 		}
 
-
+}
 	
 	
  %>
