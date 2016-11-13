@@ -68,17 +68,38 @@ class Users extends Connection{
 		}
 		catch(Exception e){ System.out.println(e); return -5;}
 	}
+<<<<<<< HEAD
+
+=======
+>>>>>>> shivang
 
 
-// 	public function getProfileByUserName($userName)
-// 	{
-// 		$sql = "SELECT * FROM users WHERE userName = '$userName'";
-// 		$result = $this->conn->query($sql);
+	public String getProfileByUserName(String userName)
+	{
+		Connection conn = new Connection();
+		String query = "SELECT * FROM users WHERE userName = '"+$userName+"'";
+		Statement st;
+		ResultSet result;
+		String arr[] = new String[7];
+		try
+		{
+			st = conn.con.createStatement();
+			result = st.executeQuery(query);
+			while(result.next())
+			{
+				arr[0] = result.getString("userId");
+				arr[1] = result.getString("firstName");
+				arr[2] = result.getString("lastName");
+				arr[3] = result.getString("userName");
+				arr[4] = result.getString("password");
+				arr[5] = result.getString("profilePhoto");
+			}
+		}catch(Exception e) { System.out.println(e);}
+		
 
-// 		$row = $result->fetch_assoc();
+		return arr;
+	}
 
-// 		return $row;
-// 	}
 
 	public boolean editProfile(String firstName, String lastName, String userName, String password, String image)
 	{
@@ -96,6 +117,24 @@ class Users extends Connection{
 				return true;
 		}catch(Exception e){ System.out.println(e); return false;}
 	}
+		
+
+
+
+
+
+
+		$sql = "UPDATE users SET firstName = '$firstName', lastName = '$lastName', password = '$password', profilePhoto = '$image' WHERE userName = '$userName'";
+		$result = $this->conn->query($sql);
+		
+		if(!$result)
+			return false;
+		else
+			return true;
+
+	}
+
+
 
 	public boolean editPost(String image, String description, int postId)
 	{
@@ -617,7 +656,7 @@ class Users extends Connection{
 // 		return $directory.$fileName;
 // 		}
 
-
+}
 	
 }	
  %>
