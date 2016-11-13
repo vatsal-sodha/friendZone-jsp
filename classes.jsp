@@ -113,30 +113,37 @@ class Users extends Connection{
 		}catch(Exception e){ System.out.println(e); return false;}
 	}
 
-// 	public function addPost($image, $description, $userName)
-// 	{
-// 		if($image)
-// 		{
-// 			$img = "../images/".$image;
-// 		}
-// 		else
-// 		{
-// 			$img='';
-// 		}
+	// public boolean addPost(String image, String description, String userName)
+	// {
+	// 	Connection conn = new Connection();
+	// 	Statement st;
+	// 	ResultSet result;
+	// 	int i;
+	// 	String img;
+	// 	if(image.length())
+	// 	{
+	// 		img = "../images/"+image;
+	// 	}
+	// 	else
+	// 	{
+	// 		img="";
+	// 	}
+	// 	try{
+	// 		String sql = "SELECT userId from users WHERE userName = '"+userName+"'";
+	// 		st = conn.con.createStatement();
+	// 	result = st.executeQuery(sql);
+	// 	$userR = $result->fetch_assoc();
+	// 	$userId = $userR['userId'];
 
-// 		$sql = "SELECT userId from users WHERE userName = '$userName'";
-// 		$result = $this->conn->query($sql);
-// 		$userR = $result->fetch_assoc();
-// 		$userId = $userR['userId'];
+	// 	$sql1 = "INSERT INTO post(userId, description, img) VALUES('$userId', '$description', '$img')";
+	// 	$result = $this->conn->query($sql1);
 
-// 		$sql1 = "INSERT INTO post(userId, description, img) VALUES('$userId', '$description', '$img')";
-// 		$result = $this->conn->query($sql1);
-
-// 		if (!$result)
-// 			return false;
-// 		else
-// 			return true;
-// 	}
+	// 	if (!$result)
+	// 		return false;
+	// 	else
+	// 		return true;
+	// }catch (Exception e) {System.out.println(e); return false;	}
+	// }
 
 	public boolean likes(int userId, int postId)
 	{
