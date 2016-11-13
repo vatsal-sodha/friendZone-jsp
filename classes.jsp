@@ -16,7 +16,7 @@ class UserProfile{
 		this.profilePhoto=profilePhoto;
 		this.userName=userName;
 	}
-}
+};
 class Connection
 { 
 	public java.sql.Connection con;
@@ -663,7 +663,7 @@ class Users extends Connection{
 }
 	
 
-	// }
+	
 	
  %>
 
