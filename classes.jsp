@@ -1,7 +1,22 @@
 <%@page import="java.sql.*" %>
 <%@page import="javax.sql.*" %>
+<%@page import="java.util.*" %>
  
 <%
+class UserProfile{
+	int userId;
+	String firstName;
+	String lastName;
+	String profilePhoto;
+	String userName;
+	UserProfile(int userId,String firstName,String lastName,String profilePhoto,String userName){
+		this.userId=userId;
+		this.firstName=firstName;
+		this.lastName=lastName;
+		this.profilePhoto=profilePhoto;
+		this.userName=userName;
+	}
+}
 class Connection
 { 
 	public java.sql.Connection con;
@@ -17,7 +32,9 @@ class Connection
 }; 
  
 class Users extends Connection{
-	
+
+	 // public static void main(String[] args){
+
 	public boolean isLogin(String userName, String password)
 	{
 		Connection conn = new Connection();
@@ -69,15 +86,32 @@ class Users extends Connection{
 	}
 
 
-// 	public function getProfileByUserName($userName)
-// 	{
-// 		$sql = "SELECT * FROM users WHERE userName = '$userName'";
-// 		$result = $this->conn->query($sql);
+	public ArrayList<UserProfile> getProfileByUserName(String userName)
+	{
+		String sql = "SELECT * FROM users WHERE userName = '"+userName+"'";
+		Connection conn = new Connection();
+		Statement st;
+		ResultSet rs;
+		ArrayList<UserProfile> al = new ArrayList<UserProfile>();
+		try{
+				st = conn.con.createStatement();
+				rs=st.executeQuery(sql);
+				
+				if(rs.next() == true)
+				{
+					 int userId=rs.getInt("userId");
+					String firstName=rs.getString("firstName");
+					String lastName=rs.getString("lastName");
+					String profilePhoto=rs.getString("profilePhoto");
+					UserProfile u = new UserProfile(userId,firstName,lastName,profilePhoto,userName);
+					al.add(u);
+					System.out.println(userName);
+				}
+				return al;
 
-// 		$row = $result->fetch_assoc();
-
-// 		return $row;
-// 	}
+			}catch(Exception e) { System.out.println(e); return (ArrayList<UserProfile>) new ArrayList<UserProfile>();}
+			
+	}
 
 // 	public function editProfile($firstName, $lastName, $userName, $password, $image)
 // 	{
@@ -598,7 +632,7 @@ class Users extends Connection{
 // 		}
 
 
-	
+	// }
 }	
  %>
 
