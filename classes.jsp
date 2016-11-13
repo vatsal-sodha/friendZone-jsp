@@ -1,7 +1,22 @@
 <%@page import="java.sql.*" %>
 <%@page import="javax.sql.*" %>
+<%@page import="java.util.*" %>
  
 <%
+class UserProfile{
+	int userId;
+	String firstName;
+	String lastName;
+	String profilePhoto;
+	String userName;
+	UserProfile(int userId,String firstName,String lastName,String profilePhoto,String userName){
+		this.userId=userId;
+		this.firstName=firstName;
+		this.lastName=lastName;
+		this.profilePhoto=profilePhoto;
+		this.userName=userName;
+	}
+}
 class Connection
 { 
 	public java.sql.Connection con;
@@ -17,7 +32,9 @@ class Connection
 }; 
  
 class Users extends Connection{
-	
+
+	 // public static void main(String[] args){
+
 	public boolean isLogin(String userName, String password)
 	{
 		Connection conn = new Connection();
@@ -68,36 +85,31 @@ class Users extends Connection{
 		}
 		catch(Exception e){ System.out.println(e); return -5;}
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> shivang
-
-
-	public String getProfileByUserName(String userName)
+	public ArrayList<UserProfile> getProfileByUserName(String userName)
 	{
+		String sql = "SELECT * FROM users WHERE userName = '"+userName+"'";
 		Connection conn = new Connection();
-		String query = "SELECT * FROM users WHERE userName = '"+$userName+"'";
 		Statement st;
-		ResultSet result;
-		String arr[] = new String[7];
-		try
-		{
-			st = conn.con.createStatement();
-			result = st.executeQuery(query);
-			while(result.next())
-			{
-				arr[0] = result.getString("userId");
-				arr[1] = result.getString("firstName");
-				arr[2] = result.getString("lastName");
-				arr[3] = result.getString("userName");
-				arr[4] = result.getString("password");
-				arr[5] = result.getString("profilePhoto");
-			}
-		}catch(Exception e) { System.out.println(e);}
-		
+		ResultSet rs;
+		ArrayList<UserProfile> al = new ArrayList<UserProfile>();
+		try{
+				st = conn.con.createStatement();
+				rs=st.executeQuery(sql);
+				
+				if(rs.next() == true)
+				{
+					 int userId=rs.getInt("userId");
+					String firstName=rs.getString("firstName");
+					String lastName=rs.getString("lastName");
+					String profilePhoto=rs.getString("profilePhoto");
+					UserProfile u = new UserProfile(userId,firstName,lastName,profilePhoto,userName);
+					al.add(u);
+					System.out.println(userName);
+				}
+				return al;
 
-		return arr;
+			}catch(Exception e) { System.out.println(e); return (ArrayList<UserProfile>) new ArrayList<UserProfile>();}
+			
 	}
 
 
@@ -118,21 +130,6 @@ class Users extends Connection{
 		}catch(Exception e){ System.out.println(e); return false;}
 	}
 		
-
-
-
-
-
-
-		$sql = "UPDATE users SET firstName = '$firstName', lastName = '$lastName', password = '$password', profilePhoto = '$image' WHERE userName = '$userName'";
-		$result = $this->conn->query($sql);
-		
-		if(!$result)
-			return false;
-		else
-			return true;
-
-	}
 
 
 
@@ -665,7 +662,9 @@ class Users extends Connection{
 
 }
 	
-}	
+
+	// }
+	
  %>
 
 
