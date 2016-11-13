@@ -1,3 +1,45 @@
+<%@page import="java.sql.*" %>
+<%@page import="javax.sql.*" %>
+<%@ include file="../classes.jsp" %>
+<%@page import="java.util.*" %>
+<% 
+	String userName="simu";
+	Users user = new Users();
+	ArrayList<UserProfile> al  = new ArrayList<UserProfile>();
+	al= user.getProfileByUserName(userName);
+    UserProfile u=(UserProfile)al.get(0);  
+    System.out.println(u.firstName+" ");  
+	//System.out.println(al.size());
+   	int userId = u.userId;
+   	String firstName = u.firstName;
+   	String lastName = u.lastName;
+   	String image = u.profilePhoto; 
+ //    if(request.getParameter("logout"))
+ //    {
+	// 	user.logout();
+	// }
+	//substitute for line number 25 in php code
+	if(request.getParameter("like")!=null)
+	{
+		int postId = Integer.parseInt(request.getParameter("like"));
+		boolean like = user.likes(userId, postId);
+		if(like == false)
+			out.println("<script type='text/javascript'>alert('Could not like the post');</script>");
+		else
+			out.println("<script type='text/javascript'>window.location.href = 'index.php#"+postId+"';</script>");
+	}
+
+	//substitute for line number 36 in the php code
+	if(request.getParameter("user2")!=null)
+	{
+		int user2 = Integer.parseInt(request.getParameter("user2"));
+		boolean result = user.follow(userId, user2);
+		if(result == false)
+			out.println("<script type='text/javascript'>alert('Could not follow the user');</script>");
+		else
+			out.println("<script type='text/javascript'>window.location.href='index.php';</script>");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,21 +77,4 @@
 		</ul>
 	</div>
 </nav>
-<%@page import="java.sql.*" %>
-<%@page import="javax.sql.*" %>
-<%@ include file="../classes.jsp" %>
-<%@page import="java.util.*" %>
-<% 
-	String userName="sodha";
-	Users user = new Users();
-	ArrayList<UserProfile> al  = new ArrayList<UserProfile>();
-	al= user.getProfileByUserName(userName);
-	Iterator itr=al.iterator();
-	 while(itr.hasNext()){  
-            UserProfile u=(UserProfile)itr.next();  
-            System.out.println(u.firstName+" ");  
-        }  
-	//System.out.println(al.size());
-
-%>
 </body></html>

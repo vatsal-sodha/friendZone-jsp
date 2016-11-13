@@ -644,21 +644,21 @@ class Users extends Connection{
 // }    
 
 
-	public String nameOfFile(String fileName, String extension = '', String directory = '' )
-	{
-		int i = 0;
-		int len = extension.length();
-		while(file_exists($directory.$fileName))
-		{
-			if(!$i) 
-			$fileName = substr($fileName,0,-$len).$i.substr($fileName, -$len);
-			else 	 
-				$fileName= substr($fileName,0,-(numberOfDigits($i)+$len)).$i.substr($fileName, -$len);
-			$i++;
-		}
+	// public String nameOfFile(String fileName, String extension = '', String directory = '' )
+	// {
+	// 	int i = 0;
+	// 	int len = extension.length();
+	// 	while(file_exists($directory.$fileName))
+	// 	{
+	// 		if(!$i) 
+	// 		$fileName = substr($fileName,0,-$len).$i.substr($fileName, -$len);
+	// 		else 	 
+	// 			$fileName= substr($fileName,0,-(numberOfDigits($i)+$len)).$i.substr($fileName, -$len);
+	// 		$i++;
+	// 	}
 
-		return $directory.$fileName;
-		}
+	// 	return $directory.$fileName;
+	// }
 
 }
 	
