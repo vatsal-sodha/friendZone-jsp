@@ -26,7 +26,7 @@
 		if(like == false)
 			out.println("<script type='text/javascript'>alert('Could not like the post');</script>");
 		else
-			out.println("<script type='text/javascript'>window.location.href = 'index.php#"+postId+"';</script>");
+			out.println("<script type='text/javascript'>window.location.href = 'index.jsp#"+postId+"';</script>");
 	}
 
 	//substitute for line number 36 in the php code
